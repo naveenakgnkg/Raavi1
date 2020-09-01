@@ -24,6 +24,10 @@ if(! mysql_real_connect(conn, server, user, password,database,0,NULL,0))
 	fprintf(stderr, "\nError: %s [%d]\n",mysql_error(conn),mysql_errno(conn));
 	exit(1);
 }
+if (mysql_query(conn, "INSERT INTO routes(sender,destination,message_type,is_active ) VALUES('ab1','yz1','credit',1)"))
+  {    
+	finish_with_error(conn); 
+  }
 if(mysql_query(conn, "SELECT * FROM routes"))
 {
 	finish_with_error(conn);
