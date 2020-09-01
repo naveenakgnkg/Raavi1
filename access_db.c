@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<mysql/mysql.h>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
 
 void finish_with_error(MYSQL *conn)
 {
@@ -11,6 +13,52 @@ void finish_with_error(MYSQL *conn)
 
 int main()
 {
+  //XML parsing code
+    xmlDoc         *document;
+    xmlNode        *root, *first_child, *node,*temp;
+    char           *filename;
+    
+    filename = "bmd.xml";
+
+    document = xmlReadFile(filename, NULL, 0);
+    temp = xmlDocGetRootElement(document);
+    root=xmlFirstElementChild(temp);
+  
+        char* arrayName[8];
+        char* arrayValue[8];
+        int i=0;
+        first_child = root->children;
+        for (node = first_child; node; node = node->next) {
+            if(node->type==1)
+            {
+                arrayName[i]=(char*)node->name;
+                arrayValue[i]=(char*)xmlNodeGetContent(node);
+                i++;
+            }
+        }
+
+    root=xmlLastElementChild(temp);
+    first_child = root;
+        for (node = first_child; node; node = node->next) {
+            if(node->type==1)
+            {
+                arrayName[i]=(char*)node->name;
+                arrayValue[i]=(char*)xmlNodeGetContent(node);
+                i++;
+            }
+        }
+    //Parsed value output
+
+    // int size = sizeof arrayName / sizeof arrayName[0];
+    // for(int i=0;i<=size;i++)
+    // {
+    //     printf("%d: name->%s value->%s\n",i,arrayName[i],arrayValue[i]);
+    // }
+    
+
+    // fprintf(stdout, "...\n");
+
+//Adding to database
 MYSQL *conn;
 
 char *server = "localhost";
@@ -24,7 +72,13 @@ if(! mysql_real_connect(conn, server, user, password,database,0,NULL,0))
 	fprintf(stderr, "\nError: %s [%d]\n",mysql_error(conn),mysql_errno(conn));
 	exit(1);
 }
-if (mysql_query(conn, "INSERT INTO routes(sender,destination,message_type,is_active ) VALUES('ab1','yz1','credit',1)"))
+//Need to update esb_request table
+
+// i-->ID
+//arrayName[i]--> Parameters
+//arrayValue[i]-->Values to be stored 
+
+if (mysql_query(conn, "INSERT INTO routes(sender,destination,message_type,is_active ) VALUES((int)arrayValue[0],(char*)arrayValue[i]),..."))//Complete the VALUES(using array and typecast as per the data type in DB)
   {    
 	finish_with_error(conn); 
   }
