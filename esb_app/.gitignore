@@ -1,6 +1,8 @@
-*.o
+**/*.o
 .flavor
 .objs
-esb_app.so
+*.so
 assets.h
-cert
+*.pem
+tmp_files
+**/*.DS_Store
