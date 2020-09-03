@@ -3,7 +3,7 @@
 #include <mysql.h>
 #include"function.h"
 
-int createDatabase(char* name)
+int readXml(char* name)
 {  
   MYSQL *con = mysql_init(NULL);
 
@@ -12,7 +12,7 @@ int createDatabase(char* name)
       fprintf(stderr, "%s\n", mysql_error(con));
       exit(1);
   }
-
+  //accessing database through id and password
   if (mysql_real_connect(con, "localhost", "root", "password", 
           NULL, 0, NULL, 0) == NULL) 
   {
@@ -20,9 +20,9 @@ int createDatabase(char* name)
       mysql_close(con);
       exit(1);
   }  
-
-char* pass="CREATE DATABASE ";
-strcat(pass,name); 
+  //concat command for creating database;
+  char* pass="CREATE DATABASE ";
+  strcat(pass,name); 
 
   if (mysql_query(con,pass)) 
   {
