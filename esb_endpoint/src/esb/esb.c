@@ -19,10 +19,12 @@ int process_esb_request(char* bmd_file_path) {
      */
      
      
-    BMD *bmd=processXML(bmd_file_path);      
+    BMD *bmd=processXML(bmd_file_path);      //To retrieve envelope bmd->bmd_envelope ,For payload use bmd->bmd_payload;
     
-     printf("BMD retrieved\n");         
-  
+     printf("BMD retrieved\n");        //Weird behaviour --> print statement gets executed only while printing some bmd elements 
+                                      //Add printf("%s",bmd->bmd_envelope->MessageID);   
+     printf("Loading SQL File...");
+     sqlcon(bmd); 
      return f_status;
 }
 

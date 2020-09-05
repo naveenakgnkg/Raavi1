@@ -3,21 +3,22 @@
 
 void xml2json(char* payloadArray)
 {
-	//creating Payload.json file
 	char filename[] = "Payload.json";
         FILE *file;
     	file = fopen(filename,"w");
     	
     	if(file == NULL) 
     	{
-        	printf("file write failed");
+        	printf("file opening filed");
         	exit(0);
     	}
-    	
-    	//writing in json file
+    	printf("\nparsed xml to json\n");
+    	//write payload with json formate
+		printf("{\n \"Payload\":\"%s\"\n}",payloadArray);
     	fprintf(file,"{\n \"Payload\":\"%s\"\n}",payloadArray);
-    	
-    	printf("\nSuccess Payload json File created\n");
+		//confirmation message
+    	printf("\nPayload json File created\n");
     	fclose(file);
-    	return NULL;
+    	// returns json filename 
+    	return strdup(filename);
 }

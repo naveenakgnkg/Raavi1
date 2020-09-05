@@ -21,7 +21,7 @@ void sqlcon(BMD *bmd)
   strcpy(received_temp,bmd->bmd_envelope->CreationDateTime);
 
 
-int n = strlen(received_temp);
+  int n = strlen(received_temp);
   	for(int i=0;i<n-5; i++)//removing +0000;
   	{
   		received_on[i] = received_temp[i];
@@ -32,7 +32,7 @@ int n = strlen(received_temp);
 
       }
 
-// printf("\n\nDateFormated %s\n\n",received_on);
+ printf("\n\nDateFormated %s\n\n",received_on);
 
 
 
@@ -60,7 +60,7 @@ int n = strlen(received_temp);
 //   {      
 //       finish_with_error(con);
 //   }
-    int8_t ID = 5;
+    int8_t ID = 3;//temperory need fix 
     char *status="availble";
 	char query[5000];
      printf("INSERT INTO esb_request(sender_id, dest_id, message_type, reference_id, message_id, received_on,status) VALUES (%s,%s,%s,%s,%s,%s,%s)\n\n", bmd->bmd_envelope->Sender ,bmd->bmd_envelope->Destination,bmd->bmd_envelope->MessageType,bmd->bmd_envelope->ReferenceID,bmd->bmd_envelope->MessageID,bmd->bmd_envelope->CreationDateTime,status);
@@ -69,7 +69,8 @@ int n = strlen(received_temp);
   if (mysql_query(con, query)) {
       finish_with_error(con);
   }
-
+  printf("\nSuccess bmd parsed to DB\n");
+  
   mysql_close(con);
   exit(0);
 }
