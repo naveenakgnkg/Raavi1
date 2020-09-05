@@ -1,3 +1,5 @@
+//default file from esb_prj modified
+
 /*
  * Copyright (c) 2016-2018 Joris Vink <joris@coders.se>
  *
@@ -35,11 +37,16 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/time.h>
-#include "esb.h"
+#include "esbfun.h"
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <limits.h>
+#include <stdio.h>
 
-#define PATH_MAX 500
+//#define PATH_MAX 500
 
-extern void poll_database_for_new_requets();
+//extern void poll_database_for_new_requets();
 
 /**
  * Define a suitable struct for holding the endpoint request handling result.
@@ -69,9 +76,10 @@ int esb_endpoint(struct http_request *req)
 	{
 		/* Invoke the ESB's main processing logic. */
 		int esb_status = process_esb_request(epr.bmd_path);
-		if (esb_status > 0)
+		if (esb_status >= 0)
 		{
 			//TODO: Take suitable action
+			printf("\nProcessing SQL Queries...\n");
 			return (KORE_RESULT_OK);
 		}
 		else
@@ -83,15 +91,71 @@ int esb_endpoint(struct http_request *req)
 	}
 }
 
-char *create_work_dir_for_request()
+static int mkdir_p(const char *path)
+{
+    /* Adapted from http://stackoverflow.com/a/2336245/119527 */
+    const size_t len = strlen(path);
+    char _path[PATH_MAX];
+    char *p; 
+
+    errno = 0;
+
+    /* Copy string so its mutable */
+    if (len > sizeof(_path)-1) {
+        errno = ENAMETOOLONG;
+        return -1; 
+    }   
+    strcpy(_path, path);
+
+    /* Iterate the string */
+    for (p = _path + 1; *p; p++) {
+        if (*p == '/') {
+            /* Temporarily truncate */
+            *p = '\0';
+
+            if (mkdir(_path, S_IRWXU) != 0) {
+                if (errno != EEXIST)
+                    return -1; 
+            }
+
+            *p = '/';
+        }
+    }   
+
+    if (mkdir(_path, S_IRWXU) != 0) {
+        if (errno != EEXIST)
+            return -1; 
+    }   
+
+    return 0;
+}
+
+
+
+static char *create_work_dir_for_request()
 {
 	kore_log(LOG_INFO, "Creating the temporary work folder.");
 	/**
 	 * TODO: Create a temporary folder in the current directory.
 	 * Its name should be unique to each request.
 	 */
+	//stackoverflow.com/que
+	
 	char *temp_path = malloc(PATH_MAX * sizeof(char));
-	strcpy(temp_path, "./bmd_files/1234");
+	time_t now = time(NULL);
+	srand(now);
+	int t=rand();
+	char cwd[100];
+	getcwd(cwd,sizeof(cwd));
+	sprintf(temp_path,"%s/bmd_files/%ld_%d",cwd,now,t);
+	    
+	int ret=mkdir_p(temp_path);
+	if(ret!=0 && errno==EEXIST)
+	{
+		sprintf(temp_path,"%s_%d",temp_path,rand());
+		mkdir_p(temp_path);
+	}
+    printf("Cuurent Working Directory %s \n ",cwd);
 	kore_log(LOG_INFO, "Temporary work folder: %s", temp_path);
 	return temp_path;
 }
@@ -132,7 +196,7 @@ save_bmd(struct http_request *req)
 	char bmd_file_path[PATH_MAX];
 	char *req_folder = create_work_dir_for_request();
 	sprintf(bmd_file_path, "%s/%s", req_folder, file->filename);
-
+    printf("File Path :  %s \n",bmd_file_path);
 	fd = open(bmd_file_path, O_CREAT | O_TRUNC | O_WRONLY, 0700);
 	if (fd == -1)
 	{
@@ -163,7 +227,7 @@ save_bmd(struct http_request *req)
 			break;
 
 		written = write(fd, buf, ret);
-		kore_log(LOG_INFO, "Written %d bytes to %s.", written, bmd_file_path);
+		kore_log(LOG_INFO, "Written %zd bytes to %s.", written, bmd_file_path);
 		if (written == -1)
 		{
 			kore_log(LOG_ERR, "write(%s): %s",
@@ -209,22 +273,22 @@ cleanup:
 	}
 	return ep_res;
 }
-
+//Was creating warning--> commented below
 // Needed to terminate the polling thread
-pthread_t thread_id;
-void kore_parent_configure(int argc, char *argv[])
-{
-	printf("\n%%%%%%%%%% kore_parent_configure\n");
-	// TODO: Start a new thread for task polling
-	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
-}
+// pthread_t thread_id;
+// void kore_parent_configure(int argc, char *argv[])
+// {
+// 	printf("\n%%%%%%%%%% kore_parent_configure\n");
+// 	// TODO: Start a new thread for task polling
+// 	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
+// }
 
-void kore_parent_teardown(void)
-{
-	printf(">>>> kore_parent_teardown\n");
-	/**
-	 * TODO: Terminate the task polling thread.
-	 * Instead of killing it, ask the thread to terminate itself.
-	 */
-	pthread_cancel(thread_id);
-}
+// void kore_parent_teardown(void)
+// {
+// 	printf(">>>> kore_parent_teardown\n");
+// 	/**
+// 	 * TODO: Terminate the task polling thread.
+// 	 * Instead of killing it, ask the thread to terminate itself.
+// 	 */
+// 	pthread_cancel(thread_id);
+// }
