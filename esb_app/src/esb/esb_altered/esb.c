@@ -22,9 +22,7 @@ int process_esb_request(char* bmd_file_path) {
     BMD *bmd=processXML(bmd_file_path);      
     
      printf("BMD retrieved\n");         
-     //not working sql
-	//printf("Loading SQL File...");
-     //sqlcon(); 
+  
      return f_status;
 }
 
