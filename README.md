@@ -109,4 +109,4 @@ Open another shell window and run:
 `curl --insecure -F "bmd_file=@/some/file/path/dummy_data.txt" https://localhost:8888/bmd`
 
 Check the logs in first shell; it should show that the file was successfully received.
-
+A solution is to kill all processes which are holding on to port 8888. It can be done easily by running the following command: 'fuser -k -n tcp 8888'. You can learn more about fuser command by reading its manpage.
