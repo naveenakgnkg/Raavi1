@@ -1,7 +1,9 @@
 Updates
 ------------------------------------------------------------------------
 1.All the files in KORE app format
+
 2.Adding xml parse data to DB:needs correction of UserProperties 
+
 3.Parse payload data to JSON
 
 ________________________________________________________________________
