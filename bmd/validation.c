@@ -72,6 +72,7 @@ void extract_envelope_utils(xmlNode * node, bmd_envelope * bm)
 	              {
 		              bm->Sender =  (char *)malloc((n+1)* sizeof(char));
                    strcpy(bm->Sender ,(char *)xmlNodeGetContent(node));
+printf("%s\n",bm->Sender);
                    if(strcmp(bm->Sender, "") ==0){
                        bm->Sender=NULL;  
                     } 
@@ -81,6 +82,7 @@ void extract_envelope_utils(xmlNode * node, bmd_envelope * bm)
                 {
 		               bm->Destination =  (char *)malloc((n+1)* sizeof(char));
                    strcpy(bm->Destination ,(char *)xmlNodeGetContent(node));
+printf("%s\n",bm->Destination);
                    if(strcmp(bm->Destination, "") ==0){
                        bm->Destination=NULL;  
                     } 
@@ -90,6 +92,7 @@ void extract_envelope_utils(xmlNode * node, bmd_envelope * bm)
 	              {
 		               bm->CreationDateTime =  (char *)malloc((n+1)* sizeof(char));
                    strcpy(bm->CreationDateTime ,(char *)xmlNodeGetContent(node));
+printf("%s\n",bm->CreationDateTime);
                    if(strcmp(bm->CreationDateTime, "") ==0){
                        bm->CreationDateTime=NULL;  
                     } 
@@ -99,6 +102,7 @@ void extract_envelope_utils(xmlNode * node, bmd_envelope * bm)
             	  {
          	         bm->Signature =  (char *)malloc((n+1)* sizeof(char));
                    strcpy(bm->Signature ,(char *)xmlNodeGetContent(node));
+printf("%s\n",bm->Signature);
                    if(strcmp(bm->Signature, "") ==0){
                        bm->Signature=NULL;  
                     } 
@@ -107,7 +111,8 @@ void extract_envelope_utils(xmlNode * node, bmd_envelope * bm)
                 else if((strcmp(((char *) node->name),attributes[6]))==0)
 	              {
 		                bm->ReferenceID =  (char *)malloc((n+1)* sizeof(char));
-                    strcpy(bm->ReferenceID ,(char *)xmlNodeGetContent(node));\
+                    strcpy(bm->ReferenceID ,(char *)xmlNodeGetContent(node));
+			printf("%s\n",bm->ReferenceID );
                     if(strcmp(bm->ReferenceID, "") ==0){
                        bm->ReferenceID=NULL;  
                     } 
