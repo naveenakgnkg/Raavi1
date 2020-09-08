@@ -7,56 +7,55 @@
 int validate_xml_file( BMD * bmd_file)
 {
   /* MessageID */
-  if(bmd_file->bmd_envelope->MessageID == NULL) {
+  if(strcmp(bmd_file->bmd_envelope->MessageID ,"" )==0) {
     fprintf(stderr,"Message ID doesnot exist in bmd");
     return 0;
   }
 
   /* MessageType */
-  if(bmd_file->bmd_envelope->MessageType == NULL) {
+  if(strcmp(bmd_file->bmd_envelope->MessageType ,"") ==0){
     fprintf(stderr,"Message Type doesnot exist in bmd");
     return 0;
   }
 
   /* Sender */
-  if(bmd_file->bmd_envelope->Sender == NULL) {
-    fprintf(stderr,"Sender doesnot exist in bmd");
+  if(strcmp(bmd_file->bmd_envelope->Sender,"")==0) {
+    fprintf(stderr,"Sender doesnot exist in bmd\n");
     return 0;
   }
 
 
   /* Destination */
-  if(bmd_file->bmd_envelope->Destination== NULL) {
+  if(strcmp(bmd_file->bmd_envelope->Destination ,"")==0 ){
     fprintf(stderr,"Destination doesnot exist in bmd");
     return 0;
   }
 
 
   /* CreationDateTime */
-  if(bmd_file->bmd_envelope->CreationDateTime == NULL) {
+  if(strcmp(bmd_file->bmd_envelope->CreationDateTime ,"")==0) {
     fprintf(stderr,"CreationDateTime doesnot exist in bmd");
     return 0;
   }
 
 
   /* Signature */
-  if(bmd_file->bmd_envelope->Signature == NULL) {
+  if(strcmp(bmd_file->bmd_envelope->Signature ,"")==0) {
     fprintf(stderr,"Signature doesnot exist in bmd");
     return 0;
   }
 
   /* ReferenceID */
-  if(bmd_file->bmd_envelope->ReferenceID == NULL) {
+  if(strcmp(bmd_file->bmd_envelope->ReferenceID , "")==0 ){
       fprintf(stderr,"ReferenceID doesnot exist in bmd");
       return 0;
   }
 
   /* payload */
-  if(bmd_file->bmd_payload->data == NULL) {
+  if(strcmp(bmd_file->bmd_payload->data , "")==0) {
     fprintf(stderr,"Payload doesnot exist in bmd");
     return 0;
-  }
-
+   }
   return 1;
 }
 

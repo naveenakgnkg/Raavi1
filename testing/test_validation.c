@@ -24,6 +24,7 @@ is_bmd_valid_setup(const MunitParameter params[], void *user_data)
 {
   char *file = "bmd.xml";
   BMD  * bd = processXML(file);
+ // printf("\n%ssohn\n",bd->bmd_envelope->Sender);
   return bd;
 }
 
@@ -33,6 +34,7 @@ test_is_bmd_valid(const MunitParameter params[], void *fixture)
 {
   BMD *test_bmd = (BMD *)fixture;
   /* is_bmd_valid returns 1 if valid */
+  //printf("\n%ssoh\n",test_bmd->bmd_envelope->Sender);
   munit_assert(validate_xml_file(test_bmd) == 1);
   return MUNIT_OK;
 }
