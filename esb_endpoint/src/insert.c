@@ -19,10 +19,11 @@ void finish_with_error(MYSQL *con)
 void sqlcon(BMD *bmd)
 {
   MYSQL *con = mysql_init(NULL);
-   int8_t received_temp[100]; //= "2020-08-12T05:18:00+0000";
+   int8_t received_temp[100]="x"; //= "2020-08-12T05:18:00+0000";
    strncpy(received_temp,bmd->bmd_envelope->CreationDateTime,19);
   int n = strlen(received_temp);
-  int8_t received_on[100];
+  int8_t received_on[100]="xyz";
+  printf("\n\nValue in reveived %s\n\n",received_temp);
   	for(int i=0;i<=n; i++)//removing +0000;
   	{
   		received_on[i] = received_temp[i];
@@ -32,13 +33,14 @@ void sqlcon(BMD *bmd)
 		}
 
       }
+    printf("\n\nDateFormated %s\n\n",received_on);
  if (con == NULL) 
   {
       fprintf(stderr, "%s\n", mysql_error(con));
       exit(1);
   }  
 
-  if (mysql_real_connect(con, "localhost", "sammy", "password", 
+  if (mysql_real_connect(con, "localhost", "root", "root", 
           "esb_db", 0, NULL, 0) == NULL) 
   {
       printf("\n\nUser login problem\n\n");
