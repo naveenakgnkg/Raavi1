@@ -151,6 +151,60 @@ BMD* processXML(char* nameXML)
 
 //void insert_to_routes(char **sender,char **destination,char **message_type,char **is_active);
 
- 
+  int validate_xml_file( BMD * bmd_file)
+{
+  /* MessageID */
+  if(bmd_file->bmd_envelope->MessageID  == "") {
+    fprintf(stderr,"Message ID doesnot exist in bmd");
+    return 0;
+  }
+
+  /* MessageType */
+  if(bmd_file->bmd_envelope->MessageType == "") {
+    fprintf(stderr,"Message Type doesnot exist in bmd");
+    return 0;
+  }
+
+  /* Sender */
+  if(bmd_file->bmd_envelope->Sender == "") {
+    fprintf(stderr,"Sender doesnot exist in bmd");
+    return 0;
+  }
+
+
+  /* Destination */
+  if(bmd_file->bmd_envelope->Destination == "") {
+    fprintf(stderr,"Destination doesnot exist in bmd");
+    return 0;
+  }
+
+
+  /* CreationDateTime */
+  if(bmd_file->bmd_envelope->CreationDateTime == "") {
+    fprintf(stderr,"CreationDateTime doesnot exist in bmd");
+    return 0;
+  }
+
+
+  /* Signature */
+  if(bmd_file->bmd_envelope->Signature == "") {
+    fprintf(stderr,"Signature doesnot exist in bmd");
+    return 0;
+  }
+
+  /* ReferenceID */
+  if(bmd_file->bmd_envelope->ReferenceID == "") {
+      fprintf(stderr,"ReferenceID doesnot exist in bmd");
+      return 0;
+  }
+
+  /* payload */
+  if(bmd_file->bmd_payload == "") {
+    fprintf(stderr,"Payload doesnot exist in bmd");
+    return 0;
+  }
+
+  return 1;
+}
 
  #endif
