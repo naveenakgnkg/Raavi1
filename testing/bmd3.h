@@ -146,6 +146,28 @@ BMD* processXML(char* nameXML)
     return(bmd);
 }
 
+
+char xml2json(char* payloadArray)
+{
+	char filename[] = "Payload.json";
+        FILE *file;
+    	file = fopen(filename,"w");
+    	
+    	if(file == NULL) 
+    	{
+        	printf("file opening filed");
+        	exit(0);
+    	}
+    	//printf("\nparsed xml to json\n");
+    	//write payload with json formate
+		//printf("{\n \"Payload\":\"%s\"\n}",payloadArray);
+    	fprintf(file,"{\n \"Payload\":\"%s\"\n}",payloadArray);
+		//confirmation message
+    	//printf("\nPayload json File created\n");
+    	fclose(file);
+    	// returns json filename 
+    	return strdup(filename);
+}
 //void insert_to_routes(char **sender,char **destination,char **message_type,char **is_active);
 //char * extract_payload(char * filepath);
 
