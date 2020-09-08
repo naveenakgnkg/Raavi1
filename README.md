@@ -1,10 +1,10 @@
 Updates
 ------------------------------------------------------------------------
-1.All the files in KORE app format
+1.DB datetime format added. 
 
-2.Adding xml parse data to DB:needs correction of UserProperties 
+2.munit testing of individual files.
 
-3.Parse payload data to JSON
+
 
 ________________________________________________________________________
 

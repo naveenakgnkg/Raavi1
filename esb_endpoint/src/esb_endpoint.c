@@ -44,9 +44,9 @@
 #include <limits.h>
 #include <stdio.h>
 
-//#define PATH_MAX 500
+#define PATH_MAX 500
 
-//extern void poll_database_for_new_requets();
+extern void poll_database_for_new_requets();
 
 /**
  * Define a suitable struct for holding the endpoint request handling result.
@@ -273,22 +273,22 @@ cleanup:
 	}
 	return ep_res;
 }
-//Was creating warning--> commented below
-// Needed to terminate the polling thread
-// pthread_t thread_id;
-// void kore_parent_configure(int argc, char *argv[])
-// {
-// 	printf("\n%%%%%%%%%% kore_parent_configure\n");
-// 	// TODO: Start a new thread for task polling
-// 	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
-// }
 
-// void kore_parent_teardown(void)
-// {
-// 	printf(">>>> kore_parent_teardown\n");
-// 	/**
-// 	 * TODO: Terminate the task polling thread.
-// 	 * Instead of killing it, ask the thread to terminate itself.
-// 	 */
-// 	pthread_cancel(thread_id);
-// }
+
+pthread_t thread_id;
+void kore_parent_configure(int argc, char *argv[])
+{
+	printf("\n%%%%%%%%%% kore_parent_configure\n");
+	// TODO: Start a new thread for task polling
+	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
+}
+
+void kore_parent_teardown(void)
+{
+	printf(">>>> kore_parent_teardown\n");
+	/**
+	 * TODO: Terminate the task polling thread.
+	 * Instead of killing it, ask the thread to terminate itself.
+	 */
+	pthread_cancel(thread_id);
+}
