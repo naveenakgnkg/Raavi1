@@ -1,8 +1,8 @@
 Updates
 ------------------------------------------------------------------------
-1.DB datetime format added. 
+1.fetch from DB. 
 
-2.munit testing of individual files.
+2.http request xml.
 
 
 
