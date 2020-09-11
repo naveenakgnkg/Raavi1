@@ -1,8 +1,8 @@
 Updates
 ------------------------------------------------------------------------
-1.fetch from DB. 
+1.send json file to end service: part1 done
 
-2.http request xml.
+2.pull http request xml.
 
 
 
