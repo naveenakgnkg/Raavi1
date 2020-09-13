@@ -45,7 +45,7 @@ int requestWeb()
     if(res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
- 
+      return -1;
     }
     else {
       /* now extract transfer info */ 
@@ -57,7 +57,7 @@ int requestWeb()
               speed_upload,
               (total_time / 1000000), (long)(total_time % 1000000));
               curl_easy_cleanup(curl);
-              return -1;
+              return 0;
  
     }
     /*completed*/

@@ -1,19 +1,19 @@
-// compiling: gcc -Wall $(xml2-config --cflags) $(xml2-config --libs) -o xmlParse xmlParse.c -lxml2
-
 #include <stdio.h>
 #include <string.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <bmd_parser.h>
 
-// compiling: gcc -Wall $(xml2-config --cflags) $(xml2-config --libs) -o bmdparsing bmdparsing.c -lxml2
-
-// typedef struct
-// {
-//   const unsigned char *key;
-//   void *value;
-// } pair;
-//bmd envelope
+int isEnd(xmlNode * node)
+{
+  xmlNode * child = node->children;
+  while(child)
+  {
+    if(child->type == XML_ELEMENT_NODE) return 0;
+    child = child->next;
+  }
+  return -1;
+}
 
 static envelope *get_envelope_struct()
 {
@@ -26,11 +26,11 @@ static payload *get_payload_struct()
     payload *bmd_payload = (payload *)malloc(sizeof(payload));
     return bmd_payload;
 }
+/*
+*for debuging
 
-
-
-
- void print(BMD *bmd)
+*/
+void print(BMD *bmd)
  {
  	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
      
@@ -43,100 +43,123 @@ static payload *get_payload_struct()
     bmd->bmd_envelope->Signature,
     bmd->bmd_envelope->UserProperties,
     bmd->bmd_payload->data
-     
      );
+    
  }
 
+BMD* parse(xmlNode * node,BMD * b)
+{
+    int len;
+    while(node!=NULL)
+    {
+        if(node->type == XML_ELEMENT_NODE)
+        {
+            if(isEnd(node))
+            {     
+                  /* Extracting MessageID*/
+                 len= strlen((char*) xmlNodeGetContent(node));
+                
+                if((strcmp(((char *) node->name),"MessageID"))==0)
+                {
+                    b->bmd_envelope->MessageID= malloc((len+1)* sizeof(char));
+                    strcpy(b->bmd_envelope->MessageID,(char *) xmlNodeGetContent(node));
+                   
+                }
+                /* Extracting MesageType*/
+                else if((strcmp(((char *) node->name),"MessageType"))==0)
+	              {
+	            b->bmd_envelope->MessageType =  (char *)malloc((len+1)* sizeof(char));
+                    strcpy(b->bmd_envelope->MessageType ,(char *)xmlNodeGetContent(node));
+                  
+	              }
+                /* Extracting Sender*/
+                else if(strcmp(((char *) node->name), "Sender")==0)
+	              {
+		    b->bmd_envelope->Sender =  (char *)malloc((len+1)* sizeof(char));
+                   strcpy(b->bmd_envelope->Sender ,(char *)xmlNodeGetContent(node));
+                 
+	            	 }
+                 /* Extracting Destination*/
+                else if((strcmp(((char *) node->name),"Destination"))==0)
+                {
+		    b->bmd_envelope->Destination =  (char *)malloc((len+1)* sizeof(char));
+                   strcpy(b->bmd_envelope->Destination ,(char *)xmlNodeGetContent(node));
+                 
+	              }
+                /* Extracting CreationDateTime*/
+                else if((strcmp(((char *) node->name),"CreationDateTime"))==0)
+	              {
+		    b->bmd_envelope->CreationDateTime =  (char *)malloc((len+1)* sizeof(char));
+                   strcpy(b->bmd_envelope->CreationDateTime ,(char *)xmlNodeGetContent(node));
+                
+	               }
+                 /* Extracting Signature*/
+	              else  if((strcmp(((char *) node->name),"Signature"))==0)
+            	  {
+         	    b->bmd_envelope->Signature =  (char *)malloc((len+1)* sizeof(char));
+                   strcpy(b->bmd_envelope->Signature ,(char *)xmlNodeGetContent(node));
+                   
+                }
+                /* Extracting ReferenceID*/
+                else if((strcmp(((char *) node->name),"ReferenceID"))==0)
+	              {
+		    b->bmd_envelope->ReferenceID =  (char *)malloc((len+1)* sizeof(char));
+                    strcpy(b->bmd_envelope->ReferenceID ,(char *)xmlNodeGetContent(node));
+                
+                }
+                
+                else if((strcmp(((char *) node->name),"Payload"))==0)
+	              {
+		    b->bmd_payload->data=  (char *)malloc((len+1)* sizeof(char));
+                    strcpy(b->bmd_payload->data,(char *)xmlNodeGetContent(node));
+                
+                }
+            }
+        }
+        parse(node->children,b);
+        node = node->next;
+    }
+    return b;
+}
+
+/**
+ * Simple example to parse a file called "file.xml", 
+ * walk down the DOM, and print the name of the 
+ * xml elements nodes.
+ */
 BMD* processXML(char* nameXML)
 {
-    xmlDoc         *document;
-    xmlNode        *root, *first_child, *node,*temp;
-    char           *filename;
+    xmlDoc         *doc = NULL;
+    xmlNode        *root_element = NULL;
     
     BMD *bmd = (BMD *)(malloc(sizeof(BMD *)));
 
     bmd->bmd_envelope = get_envelope_struct();
     bmd->bmd_payload = get_payload_struct();
 
+    /*parse the file and get the DOM */
+    doc = xmlReadFile(nameXML, NULL, 0);
 
+    if (doc == NULL) {
+        printf("error: could not parse file %s\n", nameXML);
+    }
 
-
-    filename = nameXML;
+    /*Get the root element node */
+    root_element = xmlDocGetRootElement(doc);
+    printf("printing bmd values....................\n");
+    bmd=parse(root_element, bmd);
     
-    document = xmlReadFile(filename, NULL, 0);
-    temp = xmlDocGetRootElement(document);
-    root=xmlFirstElementChild(temp);
-  
-        char* arrayName[8];
-        char* arrayValue[8];
-        int i=0;
-        first_child = root->children;
-        for (node = first_child; node; node = node->next) {
-            // if(node->type==1)
-            // fprintf(stdout, "\t Child is <%s>  (%i) value: \n", node->name ,node->type);
-            // // temp=node;
+    print(bmd);
+    return bmd;
+    /*free the document */
+    xmlFreeDoc(doc);
 
-            if(node->type==1)
-            {
-            // printf("%d\n",checkNamespace("MessageID",node->name));
-                arrayName[i]=(char*)node->name;
-                arrayValue[i]=(char*)xmlNodeGetContent(node);
-                //fprintf(stdout, "attributes:<%s>\tvalue: %s\n", node->name,xmlNodeGetContent(node));
-                //printf("%d: name->%s value->%s\n",i,arrayName[i],arrayValue[i]);
-                i++;
-            }
-        }
+    /*
+     *Free the global variables that may
+     *have been allocated by the parser.
+     */
+    xmlCleanupParser();
 
-    root=xmlLastElementChild(temp);
-    first_child = root;
-        for (node = first_child; node; node = node->next) {
-            // if(node->type==1)
-            // fprintf(stdout, "\t Child is <%s>  (%i) value: \n", node->name ,node->type);
-            // // temp=node;
-
-            if(node->type==1)
-            {
-            // printf("%d\n",checkNamespace("MessageID",node->name));
-                arrayName[i]=(char*)node->name;
-                arrayValue[i]=(char*)xmlNodeGetContent(node);
-                //fprintf(stdout, "attributes:<%s>\tvalue: %s\n", node->name,xmlNodeGetContent(node));
-                //printf("%d: name->%s value->%s\n",i,arrayName[i],arrayValue[i]);
-                i++;
-            }
-        }
-    // }
-    //int size = sizeof arrayName / sizeof arrayName[0];
-    // for(int i=0;i<=size;i++)
-    // {
-    //     printf("%d: name->%s value->%s\n",i,arrayName[i],arrayValue[i]);
-    // }
-    bmd->bmd_envelope->MessageID=(unsigned char*)arrayValue[0];
-    bmd->bmd_envelope->MessageType=(unsigned char*)arrayValue[1];
-    bmd->bmd_envelope->Destination=(unsigned char*)arrayValue[3];
-    bmd->bmd_envelope->CreationDateTime=(unsigned char*)arrayValue[4];
-    bmd->bmd_envelope->ReferenceID=(unsigned char*)arrayValue[6];
-    bmd->bmd_envelope->Sender=(unsigned char*)arrayValue[2];
-    bmd->bmd_envelope->Signature=(unsigned char*)arrayValue[5];
-    //bmd->bmd_envelope->UserProperties="UserProperties";//(unsigned char*)arrayValue[7];
-    bmd->bmd_payload->data=(unsigned char*)arrayValue[8];
-    //printf("\n\n%s\n", bmd->bmd_envelope->MessageID);
-    xml2json(bmd->bmd_payload->data);
-    //print(bmd);
-    return(bmd);
+   
 }
-
-// int main()
-// {
-
-// 	printf("In the main\n");
-//     BMD *bmd = (BMD *)(malloc(sizeof(BMD *)));
-
-// bmd=readXml("/home/pc/Desktop/bmd.xml");
-	
-// print(bmd);
-// }
-
-
-
-
 

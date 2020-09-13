@@ -32,10 +32,22 @@ int process_esb_request(char* bmd_file_path) {
          printf("Valid BMD adding to DB\n");
          sqlcon(bmd); 
      }
-     printf("As per the ID sending email.....................................\n");
      
-     int p=sendMail((char*)bmd->bmd_envelope->Destination,"/home/pc/Desktop/git/raavi_altered/raavi/esb_endpoint/Payload.json");
-     if(p==0)
+    xml2json((char*)bmd->bmd_payload->data);
+
+    printf("................Requesting Web..........................\n");
+    if(requestWeb()==0)
+    printf("Data send to web:SUCCESS\n"); 
+    else
+    {
+        printf("Data send to web:FAILED\n");
+    }
+     
+     
+     printf("......................As per the ID sending email...................\n");
+     
+     
+     if(sendMail((char*)bmd->bmd_envelope->Destination,"/home/pc/Desktop/git/raavi_altered/raavi/esb_endpoint/Payload.json")==0)
      printf("success mail sent.....................................\n");
      else
      {

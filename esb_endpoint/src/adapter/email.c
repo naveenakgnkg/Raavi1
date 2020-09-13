@@ -18,7 +18,7 @@ int sendMail(char *to, char *text) {
   if(curl) {
     /* This is the URL for your mailserver */ 
     curl_easy_setopt(curl, CURLOPT_USERNAME, "testraavi1@gmail.com");
-    curl_easy_setopt(curl, CURLOPT_PASSWORD, "Raavitest");//enter password
+    curl_easy_setopt(curl, CURLOPT_PASSWORD, "");//enter password
 
     curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.gmail.com:587/");
     curl_easy_setopt(curl, CURLOPT_USE_SSL, CURLUSESSL_ALL);
