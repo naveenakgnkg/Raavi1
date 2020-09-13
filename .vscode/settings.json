@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tcc": "c",
+        "optional": "c",
+        "limits": "c",
+        "new": "c",
+        "cmath": "c",
+        "type_traits": "c",
+        "utility": "c"
+    }
+}

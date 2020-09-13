@@ -25,7 +25,7 @@ int requestWeb()
   if(curl) {
     /* upload to this place */ 
     curl_easy_setopt(curl, CURLOPT_URL,
-                     "file:///home/pc/Desktop/new");
+                     "file:///home/pc/Desktop/toweb");
  
     /* tell it to "upload" to the URL */ 
     curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
@@ -56,6 +56,8 @@ int requestWeb()
               CURL_FORMAT_CURL_OFF_T ".%06ld seconds\n",
               speed_upload,
               (total_time / 1000000), (long)(total_time % 1000000));
+              curl_easy_cleanup(curl);
+              return -1;
  
     }
     /*completed*/

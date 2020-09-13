@@ -57,10 +57,10 @@ void sqlcon(BMD *bmd)
   }
   printf("\nSuccess bmd parsed to DB\n");
   xml2json((char*)bmd->bmd_payload->data);
-    printf("Requesting Web................\n");
-    requestWeb(); 
+  printf("Requesting Web................\n");
+  requestWeb(); 
   mysql_close(con);
-  exit(0);
+
 }
 
 /*test code:(for debug purpose)

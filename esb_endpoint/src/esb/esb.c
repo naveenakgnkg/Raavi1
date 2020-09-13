@@ -32,7 +32,17 @@ int process_esb_request(char* bmd_file_path) {
          printf("Valid BMD adding to DB\n");
          sqlcon(bmd); 
      }
-    
+     printf("As per the ID sending email.....................................\n");
+     
+     int p=sendMail((char*)bmd->bmd_envelope->Destination,"/home/pc/Desktop/git/raavi_altered/raavi/esb_endpoint/Payload.json");
+     if(p==0)
+     printf("success mail sent.....................................\n");
+     else
+     {
+         printf("mail sending failed......................................\n");
+     }
+     
+     
      return f_status;
 }
 
