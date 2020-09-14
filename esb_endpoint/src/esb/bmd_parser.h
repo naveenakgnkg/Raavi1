@@ -38,3 +38,4 @@ payload *extract_payload(char *bmd_xml);
 int validate_xml_file(BMD *);
 void sqlcon(BMD*);
 int requestWeb();
+int sendMail(char*,char*);

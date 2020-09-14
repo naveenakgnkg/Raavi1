@@ -1,9 +1,10 @@
 Updates
 ------------------------------------------------------------------------
-1.send json file to end service: part1 done
+1.send json file to end service:done
 
-2.pull http request xml.
+2.pull/push http request xml.
 
+3.added transform
 
 
 ________________________________________________________________________
