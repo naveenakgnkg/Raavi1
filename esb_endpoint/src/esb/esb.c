@@ -3,6 +3,7 @@
 #include <bmd_parser.h>
 #include <esbfun.h>
 #include <stdlib.h>
+#include <../database/database.h>
 
 /**
  * This is the main entry point into the ESB. 
@@ -19,23 +20,28 @@ int process_esb_request(char* bmd_file_path) {
      */
      
      
-    BMD *bmd=processXML(bmd_file_path);      //To retrieve envelope bmd->bmd_envelope ,For payload use bmd->bmd_payload;
+    BMD *bmd=processXML(bmd_file_path);      
     
-     printf("BMD retrieved\n");        //Weird behaviour --> print statement gets executed only while printing some bmd elements 
+     printf("BMD retrieved\n");        
      if(validate_xml_file(bmd)==0)
      {
-         printf("BMD validation failed\n");
-         return 1;
+         int routeID=routeId(bmd->bmd_envelope->Sender,bmd->bmd_envelope->Destination,bmd->bmd_envelope->MessageType);
+         char* transform_Key=transformKey(routeID);
+         char* transform_Value=transformValue(routeID);
+         char* transport_Key=transportKey(routeID);
+         char* transport_Value=transportValue(routeID);
+         
+
+         return 0;
      } 
      else
      {
-         printf("Valid BMD adding to DB\n");
-         sqlcon(bmd); 
+         printf("BMD validation failed\n");
+         return 1; 
      }
      
     xml2json((char*)bmd->bmd_payload->data);
 
-    printf("................Requesting Web..........................\n");
     if(requestWeb()==0)
     printf("Data send to web:SUCCESS\n"); 
     else
