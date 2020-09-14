@@ -32,8 +32,7 @@ int process_esb_request(char* bmd_file_path) {
          printf("Valid BMD adding to DB\n");
          sqlcon(bmd); 
      }
-
-     
+    
      return f_status;
 }
 

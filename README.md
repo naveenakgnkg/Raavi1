@@ -1,8 +1,8 @@
 Updates
 ------------------------------------------------------------------------
-1.DB datetime format added. 
+1.send json file to end service: part1 done
 
-2.munit testing of individual files.
+2.pull http request xml.
 
 
 

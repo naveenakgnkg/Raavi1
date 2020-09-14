@@ -37,3 +37,4 @@ envelope *extract_envelop(char *bmd_xml);
 payload *extract_payload(char *bmd_xml);
 int validate_xml_file(BMD *);
 void sqlcon(BMD*);
+int requestWeb();
