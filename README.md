@@ -9,11 +9,17 @@ ________________________________________________________________________
 
 # Important Commands:
 1.`kodev build`
+
 2.`kodev run`
+
 3.`curl --insecure -F "bmd_file=@//home/pc/Desktop/bmd.xml" https://localhost:8888/bmd`
+
 4.`fuser -k -n tcp 8888`
 
+
 -------------------------------------------------------------------------------
+
+
 # Introduction
 
 This project involves developing an Enterprise Service Bus (ESB) in C. It is assumed that you are comfortable programming in C on a *NIX type of operating system. We will be using `git` to version control our source code artefacts. All code will be checked-in to GitHub repositories of your respective teams.
