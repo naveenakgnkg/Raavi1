@@ -29,7 +29,6 @@ static payload *get_payload_struct()
 /*
 *for debuging
 
-*/
 void print(BMD *bmd)
  {
  	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
@@ -46,6 +45,8 @@ void print(BMD *bmd)
      );
     
  }
+
+*/
 
 BMD* parse(xmlNode * node,BMD * b)
 {
@@ -149,7 +150,7 @@ BMD* processXML(char* nameXML)
     printf("printing bmd values....................\n");
     bmd=parse(root_element, bmd);
     
-    print(bmd);
+   // print(bmd);
     return bmd;
     /*free the document */
     xmlFreeDoc(doc);

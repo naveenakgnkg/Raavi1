@@ -1,11 +1,11 @@
 #define START_TAG 1 //value acoording to return type of xmlTextReaderNodeType
 #define END_TAG 15 //value acoording to return type of xmlTextReaderNodeType
 //pair structure for UserProperties
-typedef struct
-{
-  const unsigned char *key;
-  void *value;
-} pair;
+// typedef struct
+// {
+//   const unsigned char *key;
+//   void *value;
+// } pair;
 //bmd envelope
 typedef struct
 {
@@ -15,9 +15,8 @@ typedef struct
   const unsigned char *Destination;
   const unsigned char *CreationDateTime;
   const unsigned char *Signature;
-  pair *UserProperties[50];
+  const unsigned char *UserProperties;
   const unsigned char *ReferenceID;
-
 } envelope;
 
 typedef struct
@@ -35,7 +34,7 @@ typedef struct
 BMD *processXML(char *);
 envelope *extract_envelop(char *bmd_xml);
 payload *extract_payload(char *bmd_xml);
-int validate_xml_file(BMD *);
-void sqlcon(BMD*);
-int requestWeb();
+
+int sqlcon(BMD*);
+int requestWeb(char*request,char*address);
 int sendMail(char*,char*);

@@ -5,7 +5,7 @@
 #include <../esb/bmd_parser.h>
 
 
-int requestWeb()
+int requestWeb(char* request,char* address)
 {
   CURL *curl;
   CURLcode res;
@@ -13,7 +13,7 @@ int requestWeb()
   curl_off_t speed_upload, total_time;
   FILE *fd;
  
-  fd = fopen("../esb_endpoint/Payload.json", "rb"); /* open file to upload JSON or XML*/ 
+  fd = fopen(address, "rb"); /* open file to upload JSON or XML*/ 
   if(!fd)
     return 1; /* can't continue */ 
  
@@ -25,7 +25,7 @@ int requestWeb()
   if(curl) {
     /* upload to this place */ 
     curl_easy_setopt(curl, CURLOPT_URL,
-                     "file:///home/pc/Desktop/toweb");
+                     request);
  
     /* tell it to "upload" to the URL */ 
     curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);

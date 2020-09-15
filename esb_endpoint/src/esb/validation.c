@@ -4,7 +4,7 @@
 #include <libxml/tree.h>
 #include <bmd_parser.h>
 #include <mysql.h>
-
+#include <../database/database.h>
 
 #define server "localhost"
 #define user "root"
@@ -16,14 +16,18 @@ int validate_xml_file( BMD * bmd_file)
   if(validBmdXml(bmd_file)==0)
   {
       if(sqlcon(bmd_file)==0)
-      {int route_id=activeRouteCheck(bmd_file->bmd_envelope->Sender,bmd_file->bmd_envelope->Destination,bmd_file->bmd_envelope->MessageType);
-      if(route_id ==-1)
+      {
+	  
+	  int route_val=activeRouteCheck(bmd_file->bmd_envelope->Sender,bmd_file->bmd_envelope->Destination,bmd_file->bmd_envelope->MessageType);
+      if(route_val ==-1)
       {
         printf("Route_id Validation:FAILED\n");
         return -1;
       }
       else
       {
+        int route_id=routeId(bmd_file->bmd_envelope->Sender,bmd_file->bmd_envelope->Destination,bmd_file->bmd_envelope->MessageType);
+        printf("route_id:%d for bmd->sender:%s\n",route_id,bmd_file->bmd_envelope->Sender);
         if(transportConfigCheck(route_id)==0)
         {
           if(transformConfigCheck(route_id)==0)
@@ -215,22 +219,23 @@ int transformConfigCheck(int route_id)
 	}
 
 	
-	sprintf(query, "SELECT * FROM transform_config WHERE route_id='%d'",route_id);
-	/* Execute SQL query.*/
+	sprintf(query, "SELECT * FROM transform_config WHERE route_id=%d",route_id);
+	
+	//printf("%s",query);
 	if (mysql_query(conn, query))
 	{
-		printf("Failed to execute quesry. Error: %s\n", mysql_error(conn));
+		printf("Failed to execute query. Error: %s\n", mysql_error(conn));
 	}
-
+    
 	res = mysql_use_result(conn);
-	printf("%s\n %d\n ",query,res->row_count);
-	if (res->row_count >= 1)
+
+	if (res->field_count >= 1)
 	{
 		success=0;
 	}
 	else
 	{
-		success =-1;
+		success = -1;
 	}
 
 	/* free results */

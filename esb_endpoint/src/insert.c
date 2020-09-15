@@ -16,9 +16,23 @@ void finish_with_error(MYSQL *con)
 *insert data to database
 *fixed ID as auto increment
 */
-void sqlcon(BMD *bmd)
+int sqlcon(BMD *bmd)
 {
   MYSQL *con = mysql_init(NULL);
+  //  int8_t received_temp[100]; //= "2020-08-12T05:18:00+0000";
+  //  strncpy(received_temp,bmd->bmd_envelope->CreationDateTime,19);
+  // int n = strlen(received_temp);
+  // int8_t received_on[20];
+  // 	for(int i=0;i<=16; i++)//removing +0000;
+  // 	{
+  // 		received_on[i] = received_temp[i];
+  // 		if(received_on[i]=='T')		//test for character
+	// 	{
+	// 		received_on[i] = ' '; // write next character back to current position
+	// 	}
+
+  //     }
+
    int8_t received_temp[100]="0"; //= "2020-08-12T05:18:00+0000";
    strncpy(received_temp,bmd->bmd_envelope->CreationDateTime,19);
   int n = strlen(received_temp);
@@ -32,13 +46,17 @@ void sqlcon(BMD *bmd)
 		}
 
       }
+
+
+
+
  if (con == NULL) 
   {
       fprintf(stderr, "%s\n", mysql_error(con));
-      exit(1);
+      return -1;
   }  
 
-  if (mysql_real_connect(con, "localhost", "root", "root", 
+  if (mysql_real_connect(con, "localhost", "sammy", "password", 
           "esb_db", 0, NULL, 0) == NULL) 
   {
       printf("\n\nUser login problem\n\n");
@@ -58,7 +76,7 @@ void sqlcon(BMD *bmd)
   printf("\nSuccess bmd parsed to DB\n");
   
   mysql_close(con);
-
+  return 0;
 }
 
 /*test code:(for debug purpose)

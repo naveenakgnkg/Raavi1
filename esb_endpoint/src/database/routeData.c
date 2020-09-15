@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../esb/bmd_parser.h"
 
 #define server "localhost"
 #define user "root"
@@ -46,7 +45,7 @@ int routeId(char* sender, char* destination, char* msgtype)
 char* transformKey(int route_id)
 {
 
-    char* key;
+    char* transformKey;
 	MYSQL *conn;
 	MYSQL_RES *res;
 	MYSQL_ROW row;
@@ -70,11 +69,11 @@ char* transformKey(int route_id)
 	res = mysql_store_result(conn);
 	row = mysql_fetch_row(res);
 	
-	strcpy(key,strdup(row[0]));
-
+	strcpy(transformKey,strdup(row[0]));
+	//printf("transformKey:%s\n",key);
 	/* free results */
 	mysql_free_result(res);
-	return key;
+	return transformKey;
 }
 
 char* transportKey(int route_id)
@@ -107,6 +106,7 @@ char* transportKey(int route_id)
 	
 	/* free results */
 	mysql_free_result(res);
+	printf("transport_key:%s\n",transport_key);
 	return transport_key;
 }
 
@@ -140,6 +140,7 @@ char* transportValue(int route_id)
 
 	/* free results */
 	mysql_free_result(res);
+	printf("transport_value:%s\n",transport_value);
 	return transport_value;
 }
 
@@ -173,5 +174,8 @@ char* transformValue(int route_id)
 
 	/* free results */
 	mysql_free_result(res);
+	
+	printf("transform_value:%s\n",transform_value);
+
 	return transform_value;
 }
