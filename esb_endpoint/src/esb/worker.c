@@ -21,6 +21,8 @@ void *poll_database_for_new_requets(void *vargp)
     int i = 0;
     while (i < 99)
     {
+       
+
         i++;
         /**
          * Step 2: Query the esb_requests table to see if there
@@ -45,13 +47,17 @@ void *poll_database_for_new_requets(void *vargp)
               *    of this step.
               * 5. Cleanup
               */
+            printf("This is number:%d\n",i);
             printf("Applying transformation and transporting steps.\n");
         }
         /**
          * Sleep for polling interval duration, say, 5 second.
          * DO NOT hard code it here!
          */
+   
         printf("Sleeping for 5 seconds.\n");
-        sleep(5);
+        
     }
+    
+    printf("while loop...............................................\n");
 }
