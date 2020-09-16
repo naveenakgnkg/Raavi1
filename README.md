@@ -1,6 +1,6 @@
 Updates
 ------------------------------------------------------------------------
-1.merged all.
+1.importing ds values and correcting worker.c
 
 2.working on queue.
 
