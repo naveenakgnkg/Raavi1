@@ -16,7 +16,7 @@ void finish_with_error(MYSQL *con)
 *insert data to database
 *fixed ID as auto increment
 */
-int sqlcon(BMD *bmd)
+int sqlcon(BMD *bmd,char *bmdfileloc)
 {
   MYSQL *con = mysql_init(NULL);
   //  int8_t received_temp[100]; //= "2020-08-12T05:18:00+0000";
@@ -63,11 +63,11 @@ int sqlcon(BMD *bmd)
       finish_with_error(con);
   }    
 
-  char *status="availble";
+  char *status="available";
 	char query[5000];
  // printf("INSERT INTO esb_request(sender_id, dest_id, message_type, reference_id, message_id, received_on, status) VALUES ('%s','%s', '%s','%s', '%s','%s','%s'\n)", bmd->bmd_envelope->Sender, bmd->bmd_envelope->Destination, bmd->bmd_envelope->MessageType, bmd->bmd_envelope->ReferenceID, bmd->bmd_envelope->MessageID, received_on, status);
    
-	 sprintf(query, "INSERT INTO esb_request(sender_id, dest_id, message_type, reference_id, message_id, received_on, status) VALUES ('%s','%s', '%s','%s', '%s','%s','%s')", bmd->bmd_envelope->Sender, bmd->bmd_envelope->Destination, bmd->bmd_envelope->MessageType, bmd->bmd_envelope->ReferenceID, bmd->bmd_envelope->MessageID, received_on, status);  
+	 sprintf(query, "INSERT INTO esb_request(sender_id, dest_id, message_type, reference_id, message_id, received_on, status,data_location) VALUES ('%s','%s', '%s','%s', '%s','%s','%s','%s')", bmd->bmd_envelope->Sender, bmd->bmd_envelope->Destination, bmd->bmd_envelope->MessageType, bmd->bmd_envelope->ReferenceID, bmd->bmd_envelope->MessageID, received_on, status,bmdfileloc);  
  
  /*Query to insert values from BMD to DB*/
   if (mysql_query(con, query)) {

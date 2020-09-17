@@ -31,10 +31,25 @@ typedef struct
   payload *bmd_payload;
 }BMD;
 
+
+static envelope *get_envelope_struct()
+{
+    envelope *bmd_envelope = (envelope *)malloc(sizeof(envelope));
+    return bmd_envelope;
+}
+
+static payload *get_payload_struct()
+{
+    payload *bmd_payload = (payload *)malloc(sizeof(payload));
+    return bmd_payload;
+}
+
 BMD *processXML(char *);
 envelope *extract_envelop(char *bmd_xml);
 payload *extract_payload(char *bmd_xml);
 
-int sqlcon(BMD*);
+int sqlcon(BMD *bmd,char *bmdfileloc);
 int requestWeb(char*request,char*address);
 int sendMail(char*,char*);
+
+int ttfunc(BMD* b);

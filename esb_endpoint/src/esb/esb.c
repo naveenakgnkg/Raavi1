@@ -6,7 +6,7 @@
 #include <../database/database.h>
 #include <../adapter/transform.h>
 #include <../adapter/transport.h>
-BMD* b;
+//BMD* b;
 /**
  * This is the main entry point into the ESB.
  * It will start processing of a BMD received at the HTTP endpoint.
@@ -70,7 +70,7 @@ int transport(char* tkey,char* address,int routeID){
     
 }
 
-int ttfunc()
+int ttfunc(BMD* b)
 {
          //printf("..................calculating..............\n");
          int routeID=routeId(b->bmd_envelope->Sender,b->bmd_envelope->Destination,b->bmd_envelope->MessageType);
@@ -108,11 +108,11 @@ int process_esb_request(char* bmd_file_path) {
     BMD *bmd=processXML(bmd_file_path);
 
      printf("BMD retrieved\n");
-     if(validate_xml_file(bmd)==0)
+     if(validate_xml_file(bmd,bmd_file_path)==0)
      {
-         b=bmd;
+         //b=bmd;
          
-        return ttfunc();
+        return 0;
      }
      else
      {
@@ -122,5 +122,4 @@ int process_esb_request(char* bmd_file_path) {
 
      return f_status;
 }
-
 

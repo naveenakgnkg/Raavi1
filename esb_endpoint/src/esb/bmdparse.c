@@ -15,17 +15,7 @@ int isEnd(xmlNode * node)
   return -1;
 }
 
-static envelope *get_envelope_struct()
-{
-    envelope *bmd_envelope = (envelope *)malloc(sizeof(envelope));
-    return bmd_envelope;
-}
 
-static payload *get_payload_struct()
-{
-    payload *bmd_payload = (payload *)malloc(sizeof(payload));
-    return bmd_payload;
-}
 /*
 *for debuging
 

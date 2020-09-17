@@ -11,13 +11,11 @@
 #define password "root"
 #define database "esb_db"
 
-int validate_xml_file( BMD * bmd_file)
+int validate_xml_file( BMD * bmd_file,char* bmdfileloc)
 {
   if(validBmdXml(bmd_file)==0)
   {
-      if(sqlcon(bmd_file)==0)
-      {
-	  
+     
 	  int route_val=activeRouteCheck(bmd_file->bmd_envelope->Sender,bmd_file->bmd_envelope->Destination,bmd_file->bmd_envelope->MessageType);
       if(route_val ==-1)
       {
@@ -33,7 +31,16 @@ int validate_xml_file( BMD * bmd_file)
           if(transformConfigCheck(route_id)==0)
           {
             printf("Validation:SUCCESS\n");
-            return 0;
+		 	if(sqlcon(bmd_file,bmdfileloc)==0)
+			{
+				printf("Success: added to DB\n");
+				return 0;
+			}
+			else
+			{
+				printf("Load BMD data to DB: FAILED\n");
+			}
+            
           }
           else
           {
@@ -48,11 +55,7 @@ int validate_xml_file( BMD * bmd_file)
             return -1;
           }
       }
-      }
-      else
-      {
-        printf("Load BMD data to DB: FAILED\n");
-      }
+      
       
       
   }

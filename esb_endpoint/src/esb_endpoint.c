@@ -65,6 +65,7 @@ endpoint_result save_bmd(struct http_request *);
  */
 int esb_endpoint(struct http_request *req)
 {
+
 	printf("Received the BMD request.\n");
 	endpoint_result epr = save_bmd(req);
 	if (epr.status < 0)
@@ -75,11 +76,13 @@ int esb_endpoint(struct http_request *req)
 	else
 	{
 		/* Invoke the ESB's main processing logic. */
+		kore_log(LOG_INFO, "process_esb_request(epr.bmd_path)");
+		
 		int esb_status = process_esb_request(epr.bmd_path);
 		if (esb_status >= 0)
 		{
 			//TODO: Take suitable action
-			printf("\n...DONE...\n");
+			printf("\n....................................DONE.....................................\n");
 			return (KORE_RESULT_OK);
 		}
 		else
@@ -274,22 +277,22 @@ cleanup:
 	return ep_res;
 }
 
-
-pthread_t thread_id,thread_id1,thread_id2,thread_id3;
+//,thread_id1,thread_id2,thread_id3
+pthread_t thread_id;
 void kore_parent_configure(int argc, char *argv[])
 {
 	
 	printf("\n%%%%%%%%%% kore_parent_configure\n");
 	// TODO: Start a new thread for task polling
 	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
-	pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
-	pthread_create(&thread_id2, NULL, poll_database_for_new_requets, NULL);
-	pthread_create(&thread_id3, NULL, poll_database_for_new_requets, NULL);
+	// pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
+	// pthread_create(&thread_id2, NULL, poll_database_for_new_requets, NULL);
+	// pthread_create(&thread_id3, NULL, poll_database_for_new_requets, NULL);
 
 	pthread_join( thread_id, NULL);
-    pthread_join( thread_id1, NULL); 
-	pthread_join( thread_id2, NULL); 
-	pthread_join( thread_id3, NULL); 
+    // pthread_join( thread_id1, NULL); 
+	// pthread_join( thread_id2, NULL); 
+	// pthread_join( thread_id3, NULL); 
 }
 
 void kore_parent_teardown(void)
