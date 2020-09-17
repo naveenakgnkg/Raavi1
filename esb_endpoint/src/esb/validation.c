@@ -8,7 +8,7 @@
 
 #define server "localhost"
 #define user "root"
-#define password "root"
+#define password "password"
 #define database "esb_db"
 
 int validate_xml_file( BMD * bmd_file,char* bmdfileloc)
@@ -138,7 +138,7 @@ int activeRouteCheck(const unsigned char *Sender, const unsigned char *Destinati
 	if (!mysql_real_connect(conn, server,
 							user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in validation.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/* Execute SQL query to fetch all table names.*/
@@ -177,7 +177,7 @@ int transportConfigCheck(int route_id)
 	if (!mysql_real_connect(conn, server,
 							user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in validation.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/* Execute SQL query to fetch all table names.*/
@@ -218,7 +218,7 @@ int transformConfigCheck(int route_id)
 	if (!mysql_real_connect(conn, server,
 							user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in validation.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	

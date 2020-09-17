@@ -5,7 +5,7 @@
 
 #define server "localhost"
 #define user "root"
-#define password "root"
+#define password "password"
 #define database "esb_db"
 
 
@@ -21,7 +21,7 @@ int routeId(char* sender, char* destination, char* msgtype)
 	/* Connect to database */
 	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s in routesData.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	
@@ -55,7 +55,7 @@ char* transformKey(int route_id)
 	/* Connect to database */
 	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in routesData.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/*Get transform config_value*/
@@ -88,7 +88,7 @@ char* transportKey(int route_id)
 	/* Connect to database */
 	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s. in routesData.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/* Get transform config_key */ 
@@ -122,7 +122,7 @@ char* transportValue(int route_id)
 	/* Connect to database */
 	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in routesData.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/*Get transform config_value*/
@@ -156,7 +156,7 @@ char* transformValue(int route_id)
 	/* Connect to database */
 	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
 	{
-		printf("Failed to connect MySQL Server %s.in routesData.c Error: %s\n", server, mysql_error(conn));
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
 
 	/*Get transform config_value*/

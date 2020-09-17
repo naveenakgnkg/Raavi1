@@ -56,7 +56,7 @@ int sqlcon(BMD *bmd,char *bmdfileloc)
       return -1;
   }  
 
-  if (mysql_real_connect(con, "localhost", "root", "root", 
+  if (mysql_real_connect(con, "localhost", "sammy", "password", 
           "esb_db", 0, NULL, 0) == NULL) 
   {
       printf("\n\nUser login problem\n\n");

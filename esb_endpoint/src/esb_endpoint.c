@@ -289,7 +289,7 @@ void kore_parent_configure(int argc, char *argv[])
 	// pthread_create(&thread_id2, NULL, poll_database_for_new_requets, NULL);
 	// pthread_create(&thread_id3, NULL, poll_database_for_new_requets, NULL);
 
-	pthread_join( thread_id, NULL);
+	//pthread_join( thread_id, NULL);
     // pthread_join( thread_id1, NULL); 
 	// pthread_join( thread_id2, NULL); 
 	// pthread_join( thread_id3, NULL); 
