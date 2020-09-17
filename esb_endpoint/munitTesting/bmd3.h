@@ -230,4 +230,42 @@ char xml2json(char* payloadArray)
   return 1;
 }
 
+#include <mysql.h>
+#define server "localhost"
+#define user "root"
+#define password "root"
+#define database "esb_db"
+#define TAKEN_Q "UPDATE esb_request SET status = '%s' WHERE id = '%d' " 
+int change_available_to_taken(int id,char* status)
+{
+
+	MYSQL *conn;
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	char query[5000];
+	conn = mysql_init(NULL);
+
+	/* Connect to database */
+	if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0))
+	{
+		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
+		return 0;
+	}
+
+	
+	sprintf(query,TAKEN_Q ,status,id);
+	printf("%s",query);
+	if (mysql_query(conn, query))
+	{
+		printf("Failed to execute query. Error: %s\n", mysql_error(conn));
+		return 0;
+	}
+
+	res = mysql_store_result(conn);
+
+	/* free results */
+	mysql_free_result(res);
+
+  return 1;
+}
  #endif
