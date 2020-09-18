@@ -285,11 +285,8 @@ void kore_parent_configure(int argc, char *argv[])
 	printf("\n%%%%%%%%%% kore_parent_configure\n");
 	// TODO: Start a new thread for task polling
 	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
-<<<<<<< HEAD
-	pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
-=======
 	 pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
->>>>>>> 13dd9794394673d4f84dfbf0372811e43e0c1d1c
+
 	// pthread_create(&thread_id2, NULL, poll_database_for_new_requets, NULL);
 	// pthread_create(&thread_id3, NULL, poll_database_for_new_requets, NULL);
 
