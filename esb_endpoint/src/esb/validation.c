@@ -8,7 +8,7 @@
 
 #define server "localhost"
 #define user "root"
-#define password "password"
+#define password "root"
 #define database "esb_db"
 
 int validate_xml_file( BMD * bmd_file,char* bmdfileloc)

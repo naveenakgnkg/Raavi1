@@ -81,7 +81,7 @@ int ttfunc(BMD* b)
         
         if(transport(transportKey(routeID),address,routeID)==2)
         {
-            toAddress(transportValue(routeID),address);
+            toAddress(b->bmd_envelope->Destination,address);
         }
         else if(transport(transportKey(routeID),address,routeID)==1)
         {

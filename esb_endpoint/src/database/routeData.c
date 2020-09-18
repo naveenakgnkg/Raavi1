@@ -5,7 +5,7 @@
 
 #define server "localhost"
 #define user "root"
-#define password "password"
+#define password "root"
 #define database "esb_db"
 
 
