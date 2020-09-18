@@ -5,6 +5,9 @@
 #include <string.h>
 #include <bmd_parser.h>
 
+#define user "root"
+#define password "password"
+
 void finish_with_error(MYSQL *con)
 {
   fprintf(stderr, "%s\n", mysql_error(con));
@@ -56,7 +59,7 @@ int sqlcon(BMD *bmd,char *bmdfileloc)
       return -1;
   }  
 
-  if (mysql_real_connect(con, "localhost", "root", "root", 
+  if (mysql_real_connect(con, "localhost", user,password, 
           "esb_db", 0, NULL, 0) == NULL) 
   {
       printf("\n\nUser login problem\n\n");
