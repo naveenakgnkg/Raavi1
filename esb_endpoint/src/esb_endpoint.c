@@ -278,19 +278,19 @@ cleanup:
 }
 
 //,thread_id1,thread_id2,thread_id3
-pthread_t thread_id;
+pthread_t thread_id,thread_id1;
 void kore_parent_configure(int argc, char *argv[])
 {
 	
 	printf("\n%%%%%%%%%% kore_parent_configure\n");
 	// TODO: Start a new thread for task polling
 	pthread_create(&thread_id, NULL, poll_database_for_new_requets, NULL);
-	// pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
+	pthread_create(&thread_id1, NULL, poll_database_for_new_requets, NULL);
 	// pthread_create(&thread_id2, NULL, poll_database_for_new_requets, NULL);
 	// pthread_create(&thread_id3, NULL, poll_database_for_new_requets, NULL);
 
 	//pthread_join( thread_id, NULL);
-    // pthread_join( thread_id1, NULL); 
+     //pthread_join( thread_id1, NULL); 
 	// pthread_join( thread_id2, NULL); 
 	// pthread_join( thread_id3, NULL); 
 }
@@ -303,4 +303,5 @@ void kore_parent_teardown(void)
 	 * Instead of killing it, ask the thread to terminate itself.
 	 */
 	pthread_cancel(thread_id);
+	pthread_cancel(thread_id1);
 }
