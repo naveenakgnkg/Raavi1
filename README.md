@@ -21,11 +21,11 @@ ________________________________________________________________________
 1. Ensure that you have installed the essential headers and libraries: `sudo apt install build-essential`
 2. Install required Libraries:
 
-       `sudo apt update`
-       `sudo apt install build-essential`
-       `sudo apt install libssl-dev`
-       `sudo apt install wget`
-       `sudo apt install curl`
+       sudo apt update
+       sudo apt install build-essential
+       sudo apt install libssl-dev
+       sudo apt install wget
+       sudo apt install curl
 
     Libxml2
 
