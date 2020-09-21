@@ -7,6 +7,8 @@
 //   void *value;
 // } pair;
 //bmd envelope
+#include<stdlib.h>
+#include<stdio.h>
 typedef struct
 {
   const unsigned char *MessageID;

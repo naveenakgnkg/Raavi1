@@ -2,9 +2,9 @@
 #include <string.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-#include <bmd_parser.h>
-#include <mysql.h>
-#include <../database/database.h>
+#include "bmd_parser.h"
+#include<mysql/mysql.h>
+#include "../database/database.h"
 
 #define server "localhost"
 #define user "root"
@@ -174,8 +174,7 @@ int transportConfigCheck(int route_id)
 	conn = mysql_init(NULL);
 
 	/* Connect to database */
-	if (!mysql_real_connect(conn, server,
-							user, password, database, 0, NULL, 0))
+	if (!mysql_real_connect(conn, server,user, password, database, 0, NULL, 0))
 	{
 		printf("Failed to connect MySQL Server %s. Error: %s\n", server, mysql_error(conn));
 	}
@@ -246,14 +245,14 @@ int transformConfigCheck(int route_id)
 	return success;
 }
 
-/* for testing:
+// for testing:
 int main()
 {
     char  filepath[50];
     scanf("%s",filepath);
-    bmd  * bd = (bmd*) malloc (sizeof(bmd));
-    validate_xml_file(bd)? printf("1"): printf("2");
+    BMD  * bd = (BMD*) malloc (sizeof(BMD));
+    validate_xml_file(bd,filepath)? printf("1"): printf("2");
     printf("\n");
     return 0;
 }
-*/
+

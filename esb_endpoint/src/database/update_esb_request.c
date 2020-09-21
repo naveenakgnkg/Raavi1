@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 /* Contains necessary C functions of mysql */
-#include <mysql.h>
+#include<mysql/mysql.h>
 
 #define STRING_SIZE 100
 
@@ -25,8 +25,8 @@
 //#define AVAILABLE_TO_TAKEN "UPDATE esb_request SET status = 'taken'  WHERE id='%d'"  
 #define TAKEN_Q "UPDATE esb_request SET status = '%s' WHERE id = '%d' " 
 int change_available_to_taken(int id,char* status)
-{
-
+{      
+        
 	MYSQL *conn;
 	MYSQL_RES *res;
 	MYSQL_ROW row;
@@ -40,7 +40,7 @@ int change_available_to_taken(int id,char* status)
 		return 0;
 	}
 
-	
+	printf("Connection Started");
 	sprintf(query,TAKEN_Q ,status,id);
 	//sprintf(query, "UPDATE esb_request SET status = 'done' WHERE id = '%d' ",id);
 	/* Execute SQL query.*/
@@ -60,8 +60,10 @@ int change_available_to_taken(int id,char* status)
 
 
 /*testing with a sample input*/
-// int main() {
+/*
+ int main() {
   
-//  change_available_to_taken(1);
-//  return 0;
-// }
+  change_available_to_taken(29,"processing");
+  return 0;
+  
+ }*/
