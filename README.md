@@ -4,6 +4,7 @@ Updates
 ________________________________________________________________________
 
 # Important Commands:
+
 1.`kodev build`
 
 2.`kodev run`
@@ -16,7 +17,6 @@ ________________________________________________________________________
 -------------------------------------------------------------------------------
 
 ### Installing essential libraries that you will need
-
  Open a shell and run `sudo apt update`
 1. Ensure that you have installed the essential headers and libraries: `sudo apt install build-essential`
 2. Install required Libraries:
