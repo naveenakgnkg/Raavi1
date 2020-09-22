@@ -11,6 +11,62 @@
 #define password "password"
 #define database "esb_db"
 
+int validBmdXml( BMD * bmd_file)
+{
+  /* MessageID */
+  if(strcmp(bmd_file->bmd_envelope->MessageID ,"" )==0) {
+    fprintf(stderr,"Message ID doesnot exist in bmd");
+    return 1;
+  }
+
+  /* MessageType */
+  if(strcmp(bmd_file->bmd_envelope->MessageType ,"") ==0){
+    fprintf(stderr,"Message Type doesnot exist in bmd");
+    return 1;
+  }
+
+  /* Sender */
+  if(strcmp(bmd_file->bmd_envelope->Sender,"")==0) {
+    fprintf(stderr,"Sender doesnot exist in bmd\n");
+    return 1;
+  }
+
+
+  /* Destination */
+  if(strcmp(bmd_file->bmd_envelope->Destination ,"")==0 ){
+    fprintf(stderr,"Destination doesnot exist in bmd");
+    return 1;
+  }
+
+
+  /* CreationDateTime */
+  if(strcmp(bmd_file->bmd_envelope->CreationDateTime ,"")==0) {
+    fprintf(stderr,"CreationDateTime doesnot exist in bmd");
+    return 1;
+  }
+
+
+  /* Signature */
+  if(strcmp(bmd_file->bmd_envelope->Signature ,"")==0) {
+    fprintf(stderr,"Signature doesnot exist in bmd");
+    return 1;
+  }
+
+  /* ReferenceID */
+  if(strcmp(bmd_file->bmd_envelope->ReferenceID , "")==0 ){
+      fprintf(stderr,"ReferenceID doesnot exist in bmd");
+      return 1;
+  }
+
+  /* payload */
+  if(strcmp(bmd_file->bmd_payload->data , "")==0) {
+    fprintf(stderr,"Payload doesnot exist in bmd");
+    return 1;
+   }
+  return 0;
+}
+
+
 int validate_xml_file( BMD * bmd_file,char* bmdfileloc)
 {
   if(validBmdXml(bmd_file)==0)
@@ -69,60 +125,6 @@ int validate_xml_file( BMD * bmd_file,char* bmdfileloc)
 
 
 
-int validBmdXml( BMD * bmd_file)
-{
-  /* MessageID */
-  if(strcmp(bmd_file->bmd_envelope->MessageID ,"" )==0) {
-    fprintf(stderr,"Message ID doesnot exist in bmd");
-    return 1;
-  }
-
-  /* MessageType */
-  if(strcmp(bmd_file->bmd_envelope->MessageType ,"") ==0){
-    fprintf(stderr,"Message Type doesnot exist in bmd");
-    return 1;
-  }
-
-  /* Sender */
-  if(strcmp(bmd_file->bmd_envelope->Sender,"")==0) {
-    fprintf(stderr,"Sender doesnot exist in bmd\n");
-    return 1;
-  }
-
-
-  /* Destination */
-  if(strcmp(bmd_file->bmd_envelope->Destination ,"")==0 ){
-    fprintf(stderr,"Destination doesnot exist in bmd");
-    return 1;
-  }
-
-
-  /* CreationDateTime */
-  if(strcmp(bmd_file->bmd_envelope->CreationDateTime ,"")==0) {
-    fprintf(stderr,"CreationDateTime doesnot exist in bmd");
-    return 1;
-  }
-
-
-  /* Signature */
-  if(strcmp(bmd_file->bmd_envelope->Signature ,"")==0) {
-    fprintf(stderr,"Signature doesnot exist in bmd");
-    return 1;
-  }
-
-  /* ReferenceID */
-  if(strcmp(bmd_file->bmd_envelope->ReferenceID , "")==0 ){
-      fprintf(stderr,"ReferenceID doesnot exist in bmd");
-      return 1;
-  }
-
-  /* payload */
-  if(strcmp(bmd_file->bmd_payload->data , "")==0) {
-    fprintf(stderr,"Payload doesnot exist in bmd");
-    return 1;
-   }
-  return 0;
-}
 
 int activeRouteCheck(const unsigned char *Sender, const unsigned char *Destination,const unsigned char *MessageType)
 {
@@ -142,7 +144,7 @@ int activeRouteCheck(const unsigned char *Sender, const unsigned char *Destinati
 	}
 
 	/* Execute SQL query to fetch all table names.*/
-	sprintf(query,"SELECT route_id FROM routes WHERE sender = '%s' AND destination = '%s' AND message_type= '%s'  AND is_active=b'1'", Sender, Destination, MessageType);
+	sprintf(query,"SELECT route_id FROM routes WHERE sender = '%s' AND destination = '%s' AND message_type= '%s'  AND is_active='1'", Sender, Destination, MessageType);
 	
 	if (mysql_query(conn, query))
 	{
@@ -246,13 +248,16 @@ int transformConfigCheck(int route_id)
 }
 
 // for testing:
+/*
 int main()
 {
     char  filepath[50];
     scanf("%s",filepath);
     BMD  * bd = (BMD*) malloc (sizeof(BMD));
-    validate_xml_file(bd,filepath)? printf("1"): printf("2");
+	bd = processXML(filepath);
+	validate_xml_file(bd,filepath)? printf("1"): printf("2");
     printf("\n");
     return 0;
 }
 
+*/

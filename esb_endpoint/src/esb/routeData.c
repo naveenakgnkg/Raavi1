@@ -9,7 +9,7 @@
 #define database "esb_db"
 
 
-int routeId(char* sender, char* destination, char* msgtype)
+int routeId(const unsigned char* sender,const unsigned char* destination,const unsigned char* msgtype)
 {
 
 	MYSQL *conn;

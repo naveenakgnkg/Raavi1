@@ -2,7 +2,7 @@
 #include <string.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-#include <bmd_parser.h>
+#include "bmd_parser.h"
 
 int isEnd(xmlNode * node)
 {
@@ -139,7 +139,8 @@ BMD* processXML(char* nameXML)
     root_element = xmlDocGetRootElement(doc);
     printf("printing bmd values....................\n");
     bmd=parse(root_element, bmd);
-    
+    printf("%s\n",bmd->bmd_envelope->Sender);
+    printf("%s\n",bmd->bmd_envelope->Destination);
    // print(bmd);
     return bmd;
     /*free the document */
@@ -154,3 +155,9 @@ BMD* processXML(char* nameXML)
    
 }
 
+/*int main()
+{
+
+    processXML("/home/harshal/Desktop/bmd.xml");
+}
+*/

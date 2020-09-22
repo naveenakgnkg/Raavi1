@@ -46,7 +46,7 @@ static payload *get_payload_struct()
     return bmd_payload;
 }
 
-BMD *processXML(char *);
+BMD* processXML(char* nameXML);
 envelope *extract_envelop(char *bmd_xml);
 payload *extract_payload(char *bmd_xml);
 
@@ -54,4 +54,18 @@ int sqlcon(BMD *bmd,char *bmdfileloc);
 int requestWeb(char*request,char*address);
 int sendMail(char*,char*);
 
+
 int ttfunc(BMD* b);
+int validate_xml_file( BMD * bmd_file,char* bmdfileloc);
+int transportConfigCheck(int route_id);
+int routeId(const unsigned char* sender,const unsigned char* destination,const unsigned char* msgtype);
+int validBmdXml( BMD * bmd_file);
+int activeRouteCheck(const unsigned char *Sender, const unsigned char *Destination,const unsigned char *MessageType);
+int transportConfigCheck(int route_id);
+int transformConfigCheck(int route_id);
+void *poll_database_for_new_requets(void *vargp);
+//BMD* parse(xmlNode *node,BMD * b);
+
+
+
+

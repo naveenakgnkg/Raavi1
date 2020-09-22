@@ -2,7 +2,7 @@
 #include <curl/curl.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <../esb/bmd_parser.h>
+#include "../esb/bmd_parser.h"
 
 
 int requestWeb(char* request,char* address)
@@ -68,3 +68,9 @@ int requestWeb(char* request,char* address)
   fclose(fd);
   return 0;
 }
+/*
+int main()
+{
+   printf("%d",requestWeb("testgangahv@gmail.com","HelloWorld"));
+}
+*/

@@ -21,11 +21,15 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <bmd_parser.h>
-#include <mysql.h>
+#include "bmd_parser.h"
+#include<mysql/mysql.h>
 #include<string.h>
 #include <pthread.h>
 
+#define server "localhost"
+#define user "root"
+#define password "password"
+#define database "esb_db"
 
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 /* Create a lock */
@@ -40,7 +44,7 @@ typedef struct
     char* status;
     int id;
 }tasktt;
-
+int fetch_new_request_from_db(BMD *request,tasktt *task);
 int fetch_new_request_from_db(BMD *request,tasktt *task)
 {
     /** 
@@ -98,10 +102,9 @@ void *poll_database_for_new_requets(void *vargp)
             return -1;
         }  
 
-        if (mysql_real_connect(con, "localhost", "root", "password", 
-                "esb_db", 0, NULL, 0) == NULL) 
+        if (!mysql_real_connect(con, server, user, password, database, 0, NULL, 0)) 
         {
-            printf("\n\nUser login problem\n\n");
+            printf("\n\nUser login problems\n\n");
             finish_with_error(con);
         }    
 
