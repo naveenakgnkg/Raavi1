@@ -37,11 +37,11 @@ pthread_mutex_t lock;
 
 typedef struct 
 {
-    char* sender_id;
-    char* destination_id;
-    char* message_type;
-    char* location;
-    char* status;
+    const unsigned char* sender_id;
+    const unsigned char* destination_id;
+    const unsigned char* message_type;
+     const unsigned char* location;
+     const unsigned char* status;
     int id;
 }tasktt;
 int fetch_new_request_from_db(BMD *request,tasktt *task);
@@ -79,7 +79,7 @@ void *poll_database_for_new_requets(void *vargp)
     
     // Step 1: Open a DB connection
     int i = 0;
-    while (i >=0)
+    while (i <5)
     {
        
 
@@ -101,13 +101,13 @@ void *poll_database_for_new_requets(void *vargp)
             fprintf(stderr, "%s\n", mysql_error(con));
             return -1;
         }  
-
+         //printf("hello");
         if (!mysql_real_connect(con, server, user, password, database, 0, NULL, 0)) 
         {
             printf("\n\nUser login problems\n\n");
             finish_with_error(con);
         }    
-
+        printf("hello");
 
         pthread_mutex_lock( & lock); 
 
@@ -115,7 +115,7 @@ void *poll_database_for_new_requets(void *vargp)
             char query[5000];
         // printf("INSERT INTO esb_request(sender_id, dest_id, message_type, reference_id, message_id, received_on, status) VALUES ('%s','%s', '%s','%s', '%s','%s','%s'\n)", bmd->bmd_envelope->Sender, bmd->bmd_envelope->Destination, bmd->bmd_envelope->MessageType, bmd->bmd_envelope->ReferenceID, bmd->bmd_envelope->MessageID, received_on, status);
         
-            sprintf(query, "SELECT sender_id, dest_id, message_type,data_location,id FROM esb_request WHERE status=\"available\";");  
+            sprintf(query, "SELECT sender_id, dest_id, message_type,data_location,id FROM esb_request WHERE status  = 'available'");  
         
         /*Query to insert values from BMD to DB*/
         if (mysql_query(con, query)) {
@@ -144,16 +144,18 @@ void *poll_database_for_new_requets(void *vargp)
 
             printf("\n\n%s,%s,%s,%s\n\n",sender,dest,msgType,locationBMD);
             */
-           task.sender_id=row[0];
+           task.sender_id=(char*)(row[0]);
            task.destination_id=row[1];
            task.message_type=row[2];
            task.location=row[3];
             task.id=atoi(row[4]);
             task.status=status;
-            //printf("\n\ntask_id:%d row_id:%s\n\n",task.id,row[4]);
-          // printf("\n\n%s,%s,%s,%s\n\n",task.destination_id,task.location,task.message_type,task.sender_id);
+            printf("\n%s",task.sender_id);
+            printf("\n\ntask_id:%d row_id:%s\n\n",task.id,row[4]);
+           printf("\n\n%s,%s,%s,%s\n\n",task.destination_id,task.location,task.message_type,task.sender_id);
 
             BMD *bmd = (BMD *)(malloc(sizeof(BMD *)));
+            printf("$%s$",task.location);
            bmd=processXML(task.location);
           //  printf("\n\nBMD values:%s %s",bmd->bmd_envelope->Sender,bmd->bmd_envelope->Destination);
 

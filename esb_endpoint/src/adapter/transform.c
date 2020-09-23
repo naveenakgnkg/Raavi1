@@ -6,7 +6,7 @@
 
 char* payloadToJson(BMD* bmd)
 {
-    char filename[]="payload.json";
+    char filename[]="/home/harshal/Desktop/payload.json";
     //create jsonStore folder to save files
     //to make unique json file,add messageID
     //sprintf(filename, "../jsonStore/payload%s.json", bmd->bmd_envelope->MessageID);
@@ -30,7 +30,7 @@ char* payloadToJson(BMD* bmd)
 
 char* payloadToXml(BMD* bmd)
 {
-    char filename[]="payload.xml";
+    char filename[]="/home/harshal/Desktop/pay.xml";
     //create XMLStore folder to save files
     //to make unique xml file, add messageID
    // sprintf(filename, "../XMLStore/payload%s.xml", bmd->bmd_envelope->MessageID);

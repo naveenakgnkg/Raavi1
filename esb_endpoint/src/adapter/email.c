@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <curl/curl.h>
-#include <../esb/bmd_parser.h>
-#define FROM_ADDR    "<testraavi1@gmail.com>"
-#define CC_ADDR      "<testraavi1@gmail.com>"
+#include "../esb/bmd_parser.h"
+#define FROM_ADDR    "<testgangahv@gmail.com>"
+#define CC_ADDR      "<testgangahv@gmail.com>"
 
 int sendMail(char *to, char *text) { 
   //text is file path for JSON
@@ -17,8 +17,8 @@ int sendMail(char *to, char *text) {
   curl = curl_easy_init();
   if(curl) {
     /* This is the URL for your mailserver */ 
-    curl_easy_setopt(curl, CURLOPT_USERNAME, "testraavi1@gmail.com");
-    curl_easy_setopt(curl, CURLOPT_PASSWORD, "Raavitest");//enter password
+    curl_easy_setopt(curl, CURLOPT_USERNAME, "testgangahv@gmail.com");
+    curl_easy_setopt(curl, CURLOPT_PASSWORD, "Somil@1212");//enter password
 
     curl_easy_setopt(curl, CURLOPT_URL, "smtp://smtp.gmail.com:587/");
     curl_easy_setopt(curl, CURLOPT_USE_SSL, CURLUSESSL_ALL);
@@ -30,7 +30,7 @@ int sendMail(char *to, char *text) {
     curl_easy_setopt(curl, CURLOPT_MAIL_RCPT, recipients);
  
     //JSON file to be send 
-    char* filepath=text;
+    char* filepath= text;
     FILE *fd = fopen(filepath, "r");
 //         curl_easy_setopt(curl, CURLOPT_READDATA, fp);
     curl_easy_setopt(curl, CURLOPT_READDATA,fd);
@@ -51,7 +51,12 @@ int sendMail(char *to, char *text) {
   }
  return 0;
 }
-
+/*
+int main()
+{
+ // char *s = "HELL0";
+  printf("%d",sendMail("testgangahv@gmail.com","/home/harshal/Desktop/payload.json"));
+}*/
 
 //  //smtp.gmail.com
 

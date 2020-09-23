@@ -5,7 +5,69 @@
 #include "../esb/bmd_parser.h"
 
 
-int requestWeb(char* request,char* address)
+int requestWeb(char * value,char* To)
+{
+  char *to = (char *)To;
+  char *data = (char *)value;
+
+  CURL *curl;
+  CURLcode res;
+
+  char *file_name = "/home/harshal/Desktop/checkhttp.json";
+
+  FILE *fp = fopen(file_name, "wb");
+
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  /* get a curl handle */
+  curl = curl_easy_init();
+  if (curl)
+  {
+
+  
+    curl_easy_setopt(curl, CURLOPT_URL, to);
+    /*  tell about the POST data */
+
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+    //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+
+    res = curl_easy_perform(curl);
+    /* Check for some errors */
+    if (res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    /* cleanup */
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+  fclose(fp);
+  FILE *fptr;
+
+  char c;
+  fptr = fopen(file_name, "r");
+  if (fptr == NULL)
+  {
+    printf("Cannot open file \n");
+    return 0;
+  }
+
+  // Read data from file
+  c = fgetc(fptr);
+  while (c != EOF)
+  {
+    printf("%c", c);
+    c = fgetc(fptr);
+  }
+
+  fclose(fptr);
+  return 1;
+}
+
+int requestWeb2(char* request,char* address)
 {
   CURL *curl;
   CURLcode res;
