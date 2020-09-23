@@ -173,7 +173,7 @@ void *poll_database_for_new_requets(void *vargp)
                  * found a row in esb_request
                  * that has status "available"
                  * change status to "taken"
-                 * and if completed set status to "done"
+                 * and if completed set status to "done" 
                 */
                 printf("Inside fetch_new_request and return 0 and id:%d\n",task.id);
                 task.status="taken";

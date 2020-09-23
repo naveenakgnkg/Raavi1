@@ -148,5 +148,5 @@ Check the logs in first shell; it should show that the file was successfully rec
 
 A solution is to kill all processes which are holding on to port 8888. It can be done easily by running the following
 command:
-`fuser -k -n tcp 8888`
+`fuser -k -n tcp 8888` 
 
