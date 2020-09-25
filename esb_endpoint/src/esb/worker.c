@@ -31,6 +31,34 @@
 #define password "password"
 #define database "esb_db"
 
+char *get_name_dir(const char *s)
+{
+    char t = '/';
+    const char *last = strrchr(s, t);
+    if (last != NULL)
+    {
+        const size_t len = (size_t)(last - s);
+        char *const n = malloc(len + 1);
+        memcpy(n, s, len);
+        n[len] = '\0';
+        return strdup(n);
+    }
+    return NULL;
+}
+
+void dir_clean(char *path)
+{ /* Deletes the BMD file specified by the path */
+    
+    remove(path);
+    printf("Path is removed :%s\n", path);
+    path = get_name_dir(path);
+    /* Removes the directory created by random numberes*/
+    rmdir(path);
+    printf("Removed :%s\n", path);
+    free(path);
+}
+
+
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 /* Create a lock */
 pthread_mutex_t lock;
@@ -79,7 +107,7 @@ void *poll_database_for_new_requets(void *vargp)
     
     // Step 1: Open a DB connection
     int i = 0;
-    while (i <5)
+    while (i>=0)
     {
        
 
@@ -107,7 +135,7 @@ void *poll_database_for_new_requets(void *vargp)
             printf("\n\nUser login problems\n\n");
             finish_with_error(con);
         }    
-        printf("hello");
+       // printf("hello");
 
         pthread_mutex_lock( & lock); 
 
@@ -210,6 +238,12 @@ void *poll_database_for_new_requets(void *vargp)
                 {
                     task.status="done";
                     change_available_to_taken(task.id,task.status);
+                    freebmd(bmd);
+                    printf("\n");
+                    printf("...........................BMD FREE..................................................");
+                     dir_clean(task.location);
+                      printf("\n");
+                     printf("...........................Cleaning Directory..................................................");
                     printf("\n\n...........................Completed:Endpoint..................................\n\n");
                 }
 
@@ -252,10 +286,11 @@ void *poll_database_for_new_requets(void *vargp)
          */
    
         printf("Sleeping for 5 seconds.\n");
-        pthread_mutex_unlock( & lock);
-       sleep(5);
+         pthread_mutex_unlock( & lock);
+         sleep(5);
     }
      
-            
+            // pthread_mutex_unlock( & lock);
+           
     printf("while loop...............................................\n");
 }

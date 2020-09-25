@@ -1,11 +1,11 @@
 #include<stdio.h>
-#include "email.h"
-#include <bmd_parser.h>
-#include <esbfun.h>
-#include <stdlib.h>
-#include <../database/database.h>
-#include <../adapter/transform.h>
-#include <../adapter/transport.h>
+//#include "email.h"
+#include "bmd_parser.h"
+#include "esbfun.h"
+#include "stdlib.h"
+#include "../database/database.h"
+#include "../adapter/transform.h"
+#include "../adapter/transport.h"
 //BMD* b;
 /**
  * This is the main entry point into the ESB.

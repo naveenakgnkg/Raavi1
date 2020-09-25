@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include "../esb/db_header.h"
 #define server "localhost"
 #define user "root"
 #define password "password"
@@ -73,7 +73,7 @@ char* transformKey(int route_id)
 	//printf("transformKey:%s\n",key);
 	/* free results */
 	mysql_free_result(res);
-	return transformKey;
+	return strdup(transformKey);
 }
 
 char* transportKey(int route_id)
@@ -107,7 +107,7 @@ char* transportKey(int route_id)
 	/* free results */
 	mysql_free_result(res);
 	printf("transport_key:%s\n",transport_key);
-	return transport_key;
+	return strdup(transport_key);
 }
 
 char* transportValue(int route_id)
