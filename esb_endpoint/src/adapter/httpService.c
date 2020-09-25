@@ -64,6 +64,7 @@ int requestWeb(char * value,char* To)
   }
 
   fclose(fptr);
+  printf("\n............................HTTP POST SUCCESSFUL.........................\n");
   return 1;
 }
 
@@ -128,6 +129,7 @@ int requestWeb2(char* request,char* address)
     curl_easy_cleanup(curl);
   }
   fclose(fd);
+  printf("\n............................HTTP POST SUCCESSFUL.........................\n");
   return 0;
 }
 /*

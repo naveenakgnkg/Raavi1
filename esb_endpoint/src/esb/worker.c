@@ -178,7 +178,7 @@ void *poll_database_for_new_requets(void *vargp)
            task.location=row[3];
             task.id=atoi(row[4]);
             task.status=status;
-            printf("\n%s",task.sender_id);
+          //  printf("\n%s",task.sender_id);
             printf("\n\ntask_id:%d row_id:%s\n\n",task.id,row[4]);
            printf("\n\n%s,%s,%s,%s\n\n",task.destination_id,task.location,task.message_type,task.sender_id);
 
@@ -240,7 +240,7 @@ void *poll_database_for_new_requets(void *vargp)
                     change_available_to_taken(task.id,task.status);
                     freebmd(bmd);
                     printf("\n");
-                    printf("...........................BMD FREE..................................................");
+                    printf("...........................BMD FREE..................................................\n");
                      dir_clean(task.location);
                       printf("\n");
                      printf("...........................Cleaning Directory..................................................");

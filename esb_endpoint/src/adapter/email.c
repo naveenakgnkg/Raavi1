@@ -49,6 +49,7 @@ int sendMail(char *to, char *text) {
     curl_slist_free_all(recipients);
     curl_easy_cleanup(curl);
   }
+  printf("...............................Mail sent successfully..............................\n");
  return 0;
 }
 /*
