@@ -13,7 +13,7 @@ int requestWeb(char * value,char* To)
   CURL *curl;
   CURLcode res;
 
-  char *file_name = "/home/harshal/Desktop/checkhttp.json";
+  char *file_name = "checkhttp.json";
 
   FILE *fp = fopen(file_name, "wb");
 
