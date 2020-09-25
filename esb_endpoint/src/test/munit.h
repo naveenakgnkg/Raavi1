@@ -64,7 +64,7 @@
 #  if !defined(PRIi32)
 #    define PRIi32 "i"
 #  endif
-#  if !defined(PRIi64)
+#  if !defined(PRIi64) 
 #    define PRIi64 "I64i"
 #  endif
 #  if !defined(PRId8)
