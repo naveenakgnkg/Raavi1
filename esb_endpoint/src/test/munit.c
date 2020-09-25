@@ -99,7 +99,7 @@
 #define MUNIT_NL_LANGINFO
 #include <locale.h>
 #include <langinfo.h>
-#include <strings.h>
+#include <strings.h> 
 #endif
 
 #if !defined(_WIN32)
